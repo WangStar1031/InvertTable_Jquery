@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Table Invert</title>
+</head>
+<style type="text/css">
+	table td, table th{
+		border: 1px solid gray;
+	}
+</style>
+<body>
+	<button onclick="Invert()">Invert</button>
+	<table id="myTable">
+		<tr>
+			<th>th1</th>
+			<th>th2</th>
+			<th>th3</th>
+			<th>th4</th>
+			<th>th5</th>
+		</tr>
+		<tr>
+			<td>td1-1</td>
+			<td>td1-2</td>
+			<td>td1-3</td>
+			<td>td1-4</td>
+			<td>td1-5</td>
+		</tr>
+		<tr>
+			<td>td2-1</td>
+			<td>td2-2</td>
+			<td>td2-3</td>
+			<td>td2-4</td>
+			<td>td2-5</td>
+		</tr>
+	</table>
+</body>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript">
+	function InvertTable(_table){
+		var arrTrs = _table.find("tr");
+		var arrElems = [];
+		var nRows = arrTrs.length;
+		var nCols = _table.find("tr").eq(0).children().length;
+		for( var i = 0; i < arrTrs.length; i++){
+			var curTr = arrTrs.eq(i);
+			var arrChildren = curTr.children();
+			for( var j = 0; j < arrChildren.length; j++){
+				var child = arrChildren.eq(j);
+				var strHtml = $("<div>").append(child.clone()).html();
+				arrElems.push( strHtml);
+				console.log( strHtml);
+			}
+		}
+		var strHtml = "";
+		for( var i = 0; i < nCols; i++){
+			strHtml += "<tr>";
+			for( var j = 0; j < nRows; j++){
+				var elem = arrElems[i + j * nCols];
+				strHtml += elem;
+			}
+			strHtml += "</tr>";
+		}
+		_table.html(strHtml);
+	}
+	function Invert(){
+		InvertTable("#myTable");
+	}
+</script>
+</html>
